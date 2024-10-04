@@ -13,24 +13,21 @@ public class StarlightCoffee {
         System.out.println("Enter a name for your order:");
         String name = scan.nextLine();
 
-        // I organized the coffee by price (least expensive to most to easily calculate cost
         System.out.println("""
-                What kind of coffee would you like?
-                 1. Espresso
-                 2. Americano
-                 3. Italiano
-                 4. Cappuccino
-                 Enter the number of your choice:
-                """);
+               What kind of coffee would you like?
+                1. Americano
+                2. Italiano
+                3. Espresso
+                4. Cappuccino
+               Enter the number of your choice:""");
         int coffee = scan.nextInt();
 
         System.out.println("""
-                What size would you like?
+               What size would you like?
                 1. Tall
                 2. Grande
                 3. Venti
-                Enter the number of your choice:
-                """);
+               Enter the number of your choice:""");
         int size = scan.nextInt();
 
         System.out.println("How many extra shots of espresso would you like?");
@@ -42,11 +39,11 @@ public class StarlightCoffee {
         String memberAnswer = scan.next();
 
         System.out.println("""
-                Would you like to leave a tip?
-                 1. Good Service - 10%
-                 2. Great Service - 20%
-                 3. Outstanding Service - 30%
-                 4. No Tip""");
+               Would you like to leave a tip?
+                1. Good Service - 10%
+                2. Great Service - 15%
+                3. Outstanding Service - 20%
+                4. No Tip""");
         int tipChoice = scan.nextInt();
         double tip = calculateTip(initCost, tipChoice);
         printBill(name, initCost, tip, memberAnswer);
@@ -69,8 +66,34 @@ public class StarlightCoffee {
      * @return returns initial drink cost
      */
     public static double calculateDrinkCost(int coffee, int size, int shots) {
-        // calculating a reasonable price for coffee
-        return (((double) coffee * size + (shots * 2)) * 0.65) + 3;
+        // calculating a price for coffee
+            double typePrice = 0;
+            if (coffee == 1) {
+                typePrice = 2.25;
+        }
+            else if (coffee == 2) {
+                typePrice = 2.75;
+            }
+            else if (coffee == 3) {
+                typePrice = 3.50;
+            }
+            else if (coffee == 4) {
+                typePrice = 3.75;
+            }
+
+            double sizeUpcharge = 0;
+            if (size == 1) {
+                sizeUpcharge = 1;
+            }
+            else if (size == 2) {
+                sizeUpcharge = typePrice * 0.20;
+            }
+            else if (size == 3) {
+                sizeUpcharge = typePrice * 0.40;
+            }
+
+
+        return typePrice + sizeUpcharge + (shots * 0.50);
 
     }
 
@@ -81,13 +104,20 @@ public class StarlightCoffee {
      * @return returns calculated tip
      */
     public static double calculateTip(double initCost, int tipAmount) {
+        double tip = 0;
         if (tipAmount == 4){
             return 0;
-        } else {
-            return ((double)tipAmount/10) * initCost;
+        } else if (tipAmount == 1) {
+            tip = initCost * 0.10;
+        }
+        else if (tipAmount == 2) {
+            tip = initCost * 0.15;
+        }
+        else if (tipAmount == 3) {
+            tip = initCost * 0.20;
         }
 
-
+        return tip;
     }
 
     /**
@@ -103,7 +133,7 @@ public class StarlightCoffee {
             discount = initCost * 0.1;
         }
 
-        double tax = 0.175 * initCost;
+        double tax = 0.0875 * (initCost - discount);
         double total = initCost - discount + tip + tax ;
 
         System.out.printf("""
