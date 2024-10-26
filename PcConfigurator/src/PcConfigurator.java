@@ -22,7 +22,7 @@ public class PcConfigurator {
                 System.out.print("\nEnter a name for your receipt file: ");
                 receiptFileName = scan.nextLine();
                 new PrintWriter(new BufferedWriter(new FileWriter(receiptFileName, true))).close();
-            } catch (IOException e) {
+            } catch (FileNotFoundException e) {
                 System.out.println("Invalid file name. Please try again.");
                 // Loop again if no valid file is given:
                 receiptFileName = null;
