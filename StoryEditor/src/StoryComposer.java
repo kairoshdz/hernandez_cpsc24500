@@ -1,6 +1,8 @@
 // used chatGPT to figure out what libraries I would need to import
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -66,11 +68,13 @@ public class StoryComposer {
         JLabel inputLabel = new JLabel("Enter Word:");
         inputField = new JTextField();
         JButton addButton = new JButton("Add");
-        addButton.addActionListener(_ -> {
-            String text = inputField.getText().trim();
-            if (!text.isEmpty()) {
-                textArea.append(text + " ");
-                inputField.setText("");
+        addButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String text = inputField.getText().trim();
+                if (!text.isEmpty()) {
+                    textArea.append(text + " ");
+                    inputField.setText("");
+                }
             }
         });
         // Add label, text field, and button to the input panel
@@ -92,9 +96,23 @@ public class StoryComposer {
         verbButton.setPreferredSize(new Dimension(100, 100));
         adjButton.setPreferredSize(new Dimension(100, 100));
 
-        nounButton.addActionListener(_ -> addRandomWord("n"));
-        verbButton.addActionListener(_ -> addRandomWord("v"));
-        adjButton.addActionListener(_ -> addRandomWord("a"));
+        nounButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                addRandomWord("n");
+            }
+        });
+
+        verbButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                addRandomWord("v");
+            }
+        });
+
+        adjButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                addRandomWord("a");
+            }
+        });
 
         buttonPanel.add(nounButton);
         buttonPanel.add(verbButton);
@@ -108,11 +126,35 @@ public class StoryComposer {
         frame.add(buttonPanel, BorderLayout.WEST);
 
         // Adds functions from other methods in this class to menu buttons
-        openItem.addActionListener(_ -> openFile());
-        saveItem.addActionListener(_ -> saveFile());
-        clearItem.addActionListener(_ -> textArea.setText(""));
-        exitItem.addActionListener(_ -> System.exit(0));
-        aboutItem.addActionListener(_ -> JOptionPane.showMessageDialog(frame, "Story Editor by Erick Hernandez, December 2024"));
+        openItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                openFile();
+            }
+        });
+
+        saveItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                saveFile();
+            }
+        });
+
+        clearItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                textArea.setText("");
+            }
+        });
+
+        exitItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+
+        aboutItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(frame, "Story Editor by Erick Hernandez, December 2024");
+            }
+        });
 
         frame.setVisible(true);
     }
