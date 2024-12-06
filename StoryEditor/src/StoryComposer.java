@@ -64,9 +64,10 @@ public class StoryComposer {
         // creating an input panel and add button at the bottom of the screen for the user to input any word
         // also creates a label to the left of the input panel
         JPanel inputPanel = new JPanel();
-        inputPanel.setLayout(new BorderLayout());
+        inputPanel.setLayout(new FlowLayout());
         JLabel inputLabel = new JLabel("Enter Word:");
         inputField = new JTextField();
+        inputField.setPreferredSize(new Dimension(350, 30));
         JButton addButton = new JButton("Add");
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
